@@ -46,7 +46,7 @@ public class ProductController {
             headers.add("called By", "Anurag Khanna");
             return new ResponseEntity<>(productDto, headers, HttpStatus.OK);
         }catch (IllegalArgumentException exception) {
-            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+            throw exception;
         }
     }
 
