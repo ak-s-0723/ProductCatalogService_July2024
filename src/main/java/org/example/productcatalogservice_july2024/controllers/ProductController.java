@@ -6,6 +6,7 @@ import org.example.productcatalogservice_july2024.models.Category;
 import org.example.productcatalogservice_july2024.models.Product;
 import org.example.productcatalogservice_july2024.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
@@ -20,6 +21,7 @@ import java.util.List;
 public class ProductController {
 
     @Autowired
+    @Qualifier("sps")
     private IProductService productService;
 
     @GetMapping
@@ -52,9 +54,11 @@ public class ProductController {
 
 
     @PostMapping
-    public ProductDto createProduct(@RequestBody ProductDto product)
+    public ProductDto createProduct(@RequestBody ProductDto productDto)
     {
-        return null;
+        Product product = getProduct(productDto);
+        Product result = productService.createProduct(product);
+        return getProductDto(result);
     }
 
     @PutMapping("{id}")
@@ -66,13 +70,14 @@ public class ProductController {
 
     private Product getProduct(ProductDto productDto) {
         Product product = new Product();
-        //product.setId(productDto.getId());
+        product.setId(productDto.getId());
         product.setName(productDto.getName());
         product.setPrice(productDto.getPrice());
         product.setImageUrl(productDto.getImageUrl());
         product.setDescription(productDto.getDescription());
         if(productDto.getCategory() != null) {
             Category category = new Category();
+            category.setId(productDto.getCategory().getId());
             category.setName(productDto.getCategory().getName());
             product.setCategory(category);
         }
