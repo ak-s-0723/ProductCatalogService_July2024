@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Setter
 @Getter
@@ -19,4 +20,6 @@ public abstract class BaseModel {
     private Date lastUpdatedAt;
 
     private Status status;
+
+    //private UUID uuidId = UUID.randomUUID();
 }
