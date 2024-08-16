@@ -1,6 +1,7 @@
 package org.example.productcatalogservice_july2024.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,6 @@ public class Category extends BaseModel {
 
     private String description;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category",fetch = FetchType.EAGER)
     private List<Product> products;
 }

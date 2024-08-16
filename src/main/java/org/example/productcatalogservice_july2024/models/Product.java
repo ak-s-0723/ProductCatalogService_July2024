@@ -20,4 +20,6 @@ public class Product extends BaseModel {
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Category category;
+
+    //private Boolean isPrime;
 }
