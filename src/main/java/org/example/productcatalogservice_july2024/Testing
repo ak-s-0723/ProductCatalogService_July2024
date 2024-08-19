@@ -1,0 +1,36 @@
+TDD - TEST DRIVEN DEVELOPMENT
+
+First testcases and then we do development
+
+
+int add(double a,long b) {
+  return a+b;
+}
+
+
+void testAdd() {
+int a = 1; -> long a = 1;
+int b=2;  -> long b = 2;
+  int res = add(a,b);
+  assert(res==3);
+ }
+
+ Cons ->
+  1. Time taking (back and forth , lot of iteration)
+  2. 3rd party integrations become complex
+
+ Pros ->
+ 1. More empathetic towards customer/user/client
+ 2. As you will be writing testcases based on req directly,
+ More negative/edges cases are handled properly
+
+ NONE OF FAANG FOLLOWS TDD , gojek , throughtworks, goldman -> TDD
+ Even followed in interviews as well.
+
+ Flaky Testing
+ Whose behavior is non-deterministic ,
+ sometimes passing, sometimes failing.
+
+
+ RANDOM NUMBER GENERATION -> Flaky
+ Multi-Threading -> Flaky
