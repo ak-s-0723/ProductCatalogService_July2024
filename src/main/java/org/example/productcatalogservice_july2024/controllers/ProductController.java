@@ -21,7 +21,7 @@ import java.util.List;
 public class ProductController {
 
     @Autowired
-    @Qualifier("sps")
+    //@Qualifier("sps")
     private IProductService productService;
 
     @GetMapping
@@ -38,8 +38,10 @@ public class ProductController {
     @GetMapping("{id}")
     public ResponseEntity<ProductDto> getProductById(@PathVariable("id") Long productId) {
         try {
-            if (productId <= 0) {
+            if (productId == 0) {
                 throw new IllegalArgumentException("ProductId is invalid");
+            } else if(productId < 0) {
+                throw new IllegalArgumentException("Are you crazy ?");
             }
 
             Product product = productService.getProductById(productId);
