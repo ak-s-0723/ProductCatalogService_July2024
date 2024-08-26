@@ -5,7 +5,10 @@ import org.example.productcatalogservice_july2024.dtos.ProductDto;
 import org.example.productcatalogservice_july2024.models.Category;
 import org.example.productcatalogservice_july2024.models.Product;
 import org.example.productcatalogservice_july2024.services.IProductService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -22,6 +25,9 @@ class ProductControllerTest {
 
     @MockBean
     private IProductService productService;
+
+    @Captor
+    private ArgumentCaptor<Long> idCaptor;
 
     @Test
     public void Test_GetProductById_WithValidId_ReturnsProductSuccessfully() {
@@ -88,5 +94,23 @@ class ProductControllerTest {
         //Assert
         assertNotNull(response);
         assertEquals("Iphone12",response.getName());
+    }
+
+    @DisplayName("Passing product id as 1 to controller and expect same on product service call as well, if this assert fails, that means value was not 1")
+    @Test
+    public void Test_GetProductById_ServiceCalledWithExpectedArguments_RunSuccessfully() {
+        //Arrange
+        Long productId = 1L;
+        Product product =new Product();
+        product.setId(productId);
+
+        when(productService.getProductById(any(Long.class))).thenReturn(product);
+
+        //Act
+        productController.getProductById(productId);
+
+        //Assert
+        verify(productService).getProductById(idCaptor.capture());
+        assertEquals(productId,idCaptor.getValue());
     }
 }

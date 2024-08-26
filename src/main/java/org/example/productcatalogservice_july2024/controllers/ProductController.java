@@ -44,6 +44,8 @@ public class ProductController {
                 throw new IllegalArgumentException("Are you crazy ?");
             }
 
+            //productId++;
+
             Product product = productService.getProductById(productId);
             ProductDto productDto = getProductDto(product);
             MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
