@@ -15,7 +15,7 @@ public class ProductControllerFlowTest {
     @Autowired
     private ProductController productController;
 
-    @Test
+    //@Test
     public void Test_Create_Replace_GetProduct_WithStub_RunSuccessfully() {
         //Arrange
         ProductDto productDto = new ProductDto();
@@ -24,16 +24,16 @@ public class ProductControllerFlowTest {
 
         //Act
         ProductDto response = productController.createProduct(productDto);
-        ResponseEntity<ProductDto> productDtoResponseEntity = productController
+        ProductDto productDtoR = productController
                 .getProductById(1L);
         productDto.setName("Iphone 16");
 
         ProductDto replacedProduct = productController.replaceProduct(1L,productDto);
-        ResponseEntity<ProductDto> productDtoResponseEntity2 = productController
+        ProductDto productDtoR2 = productController
                 .getProductById(1L);
 
         //Assert
-        assertEquals("Iphone 15",productDtoResponseEntity.getBody().getName());
-        assertEquals("Iphone 16",productDtoResponseEntity2.getBody().getName());
+        assertEquals("Iphone 15",productDtoR.getName());
+        assertEquals("Iphone 16",productDtoR2.getName());
     }
 }

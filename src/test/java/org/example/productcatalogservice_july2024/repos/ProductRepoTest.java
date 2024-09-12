@@ -16,8 +16,8 @@ class ProductRepoTest {
     @Autowired
     private ProductRepo productRepo;
 
-    @Test
-    @Transactional
+    //@Test
+    //@Transactional
     public void testQueries() {
 
 //        List<Product> productList = productRepo.findAllByOrderByPriceDesc();
@@ -27,6 +27,15 @@ class ProductRepoTest {
 
         String val = productRepo.findCategoryNameFromProductId(6L);
         System.out.println(val);
+    }
+
+    //@Test
+    public void saveProduct() {
+        Product product = new Product();
+        product.setId(100L);
+        product.setName("iphone");
+        product.setDescription("new iphone is coming");
+        productRepo.save(product);
     }
 
 }

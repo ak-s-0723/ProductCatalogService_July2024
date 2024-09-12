@@ -6,7 +6,6 @@ import org.example.productcatalogservice_july2024.models.Category;
 import org.example.productcatalogservice_july2024.models.Product;
 import org.example.productcatalogservice_july2024.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
@@ -21,7 +20,6 @@ import java.util.List;
 public class ProductController {
 
     @Autowired
-    //@Qualifier("sps")
     private IProductService productService;
 
     @GetMapping
@@ -36,7 +34,7 @@ public class ProductController {
      }
 
     @GetMapping("{id}")
-    public ResponseEntity<ProductDto> getProductById(@PathVariable("id") Long productId) {
+    public ProductDto getProductById(@PathVariable("id") Long productId) {
         try {
             if (productId == 0) {
                 throw new IllegalArgumentException("ProductId is invalid");
@@ -50,7 +48,7 @@ public class ProductController {
             ProductDto productDto = getProductDto(product);
             MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
             headers.add("called By", "Anurag Khanna");
-            return new ResponseEntity<>(productDto, headers, HttpStatus.OK);
+            return productDto;
         }catch (IllegalArgumentException exception) {
             throw exception;
         }

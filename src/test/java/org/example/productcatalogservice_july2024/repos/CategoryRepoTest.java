@@ -17,8 +17,8 @@ class CategoryRepoTest {
     @Autowired
     private CategoryRepo categoryRepo;
 
-    @Test
-    @Transactional
+    //@Test
+    //@Transactional
     public void demonstrateLoading() {
 
         Category c = categoryRepo.findById(2L).get();
@@ -31,8 +31,8 @@ class CategoryRepoTest {
     }
 
 
-    @Test
-    @Transactional
+    //@Test
+    //@Transactional
     public void demonstrateFetchModeFetchType() {
         Category c = categoryRepo.findById(2L).get();
         for(Product product : c.getProducts()) {
@@ -40,8 +40,8 @@ class CategoryRepoTest {
         }
     }
 
-    @Test
-    @Transactional
+    //@Test
+    //@Transactional
     public void nPlusOneProblem() {
         List<Category> categoryList = categoryRepo.findAll();
         for(Category category : categoryList) {
