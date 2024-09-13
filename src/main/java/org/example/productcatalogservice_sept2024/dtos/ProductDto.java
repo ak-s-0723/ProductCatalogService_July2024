@@ -1,11 +1,13 @@
-package org.example.productcatalogservice_sept2024.models;
+package org.example.productcatalogservice_sept2024.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-public class Product extends BaseModel {
+public class ProductDto {
+    private Long id;
+
     private String title;
 
     private String description;
@@ -14,7 +16,5 @@ public class Product extends BaseModel {
 
     private Double amount;
 
-    private Category category;
-
-    private Boolean isPrimeSpecific;
+    private CategoryDto category;
 }
