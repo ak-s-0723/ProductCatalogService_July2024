@@ -50,7 +50,8 @@ public class ProductController {
             if (product == null) return null;
             return new ResponseEntity<>(from(product), HttpStatus.OK);
         }catch (RuntimeException exception) {
-            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+            //return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+            throw exception;
         }
     }
 
@@ -99,4 +100,10 @@ public class ProductController {
 
         return productDto;
     }
+
+    @ExceptionHandler({RuntimeException.class})
+    public ResponseEntity<String> handleExceptions(Exception exception) {
+        return new ResponseEntity<>("kuch toh phata hai", HttpStatus.BAD_REQUEST);
+    }
+
 }
