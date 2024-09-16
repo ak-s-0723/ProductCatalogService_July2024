@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service("sps")
-//@Primary
+@Primary
 public class StorageProductService implements IProductService {
 
     @Autowired
@@ -34,7 +34,8 @@ public class StorageProductService implements IProductService {
 
     @Override
     public List<Product> getAllProducts() {
-        return null;
+        return productRepo.findAll();
+       // return null;
     }
 
     @Override

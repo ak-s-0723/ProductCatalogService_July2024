@@ -29,4 +29,14 @@ class ProductRepoTest {
         System.out.println(val);
     }
 
+
+    @Test
+    public void saveProductsInDb() {
+        Product product = new Product();
+        product.setId(1L);
+        product.setName("Iwatch10");
+        product.setDescription("NEW WATCH HAHAHAHAHAHAH");
+        productRepo.save(product);
+    }
+
 }
