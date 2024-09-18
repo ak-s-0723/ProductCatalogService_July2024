@@ -7,6 +7,7 @@ import org.example.productcatalogservice_sept2024.models.Product;
 import org.example.productcatalogservice_sept2024.services.IProductService;
 import org.example.productcatalogservice_sept2024.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -56,8 +57,10 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ProductDto createProduct(@RequestBody ProductDto product) {
-        return null;
+    public ProductDto createProduct(@RequestBody ProductDto productDto) {
+        Product product = from(productDto);
+        Product response = productService.createProduct(product);
+        return from(response);
     }
 
 
@@ -77,6 +80,7 @@ public class ProductController {
         product.setDescription(productDto.getDescription());
         if(productDto.getCategory() != null) {
             Category category = new Category();
+            category.setId(productDto.getCategory().getId());
             category.setName(productDto.getCategory().getName());
             product.setCategory(category);
         }

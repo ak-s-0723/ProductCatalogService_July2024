@@ -21,7 +21,7 @@ import java.util.List;
 
 import static java.util.Objects.nonNull;
 
-@Service
+@Service("fkps")
 public class ProductService implements IProductService {
 
     @Autowired
