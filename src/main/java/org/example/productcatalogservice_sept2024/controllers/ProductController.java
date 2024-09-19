@@ -44,9 +44,12 @@ public class ProductController {
     public ResponseEntity<ProductDto> getProductById(@PathVariable("id") Long productId)
     {
         try {
-            if (productId < 1) {
+            if (productId < 0) {
                 throw new RuntimeException("Product not found");
+            } else if(productId == 0) {
+                throw new RuntimeException("Something very bad");
             }
+
             Product product = productService.getProductById(productId);
             if (product == null) return null;
             return new ResponseEntity<>(from(product), HttpStatus.OK);
