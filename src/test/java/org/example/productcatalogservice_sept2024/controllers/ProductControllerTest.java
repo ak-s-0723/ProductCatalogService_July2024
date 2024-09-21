@@ -22,8 +22,7 @@ public class ProductControllerTest {
          @Autowired
          private ProductController productController;
 
-
-         @MockBean
+          @Autowired
          private IProductService productService;
 
 
