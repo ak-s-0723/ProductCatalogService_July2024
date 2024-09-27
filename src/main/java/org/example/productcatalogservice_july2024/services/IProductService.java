@@ -13,4 +13,6 @@ public interface IProductService {
     public List<Product> getAllProducts();
 
     public Product replaceProduct(Product product,Long id);
+
+    public Product getProductBasedOnUserRole(Long userId,Long productId);
 }

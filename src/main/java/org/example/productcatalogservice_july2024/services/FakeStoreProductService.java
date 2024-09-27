@@ -6,6 +6,8 @@ import org.example.productcatalogservice_july2024.models.Category;
 import org.example.productcatalogservice_july2024.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service("fkps")
+@Primary
 public class FakeStoreProductService implements IProductService {
 
     @Autowired
@@ -27,10 +30,31 @@ public class FakeStoreProductService implements IProductService {
     @Autowired
     private FakeStoreApiClient fakeStoreApiClient;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @Override
     public Product getProductById(Long id) {
-      FakeStoreProductDto fakeStoreProductDto = fakeStoreApiClient.getProductById(id);
+//        check in cache
+//           return from cache if found
+//         else
+//             call fakestore
+//             persist in cache
+//             return
+        FakeStoreProductDto fakeStoreProductDto = null;
+
+       fakeStoreProductDto = (FakeStoreProductDto) redisTemplate.opsForHash().get("PRODUCTS__",id);
+
+       if(fakeStoreProductDto !=null) {
+           System.out.println("FOUND IN CACHE");
+           return getProduct(fakeStoreProductDto);
+       }
+
+
+      fakeStoreProductDto = fakeStoreApiClient.getProductById(id);
       if(fakeStoreProductDto != null) {
+          System.out.println("FOUND BY CALLING FAKE STORE");
+          redisTemplate.opsForHash().put("PRODUCTS__",id,fakeStoreProductDto);
           return getProduct(fakeStoreProductDto);
       }
 
@@ -59,6 +83,11 @@ public class FakeStoreProductService implements IProductService {
         FakeStoreProductDto input = getFakeStoreProductDto(product);
         FakeStoreProductDto fakeStoreProductDtoResponse = requestForEntity("http://fakestoreapi.com/products/{id}",HttpMethod.PUT,input, FakeStoreProductDto.class,id).getBody();
        return getProduct(fakeStoreProductDtoResponse);
+    }
+
+    @Override
+    public Product getProductBasedOnUserRole(Long userId, Long productId) {
+        return null;
     }
 
 
@@ -96,3 +125,9 @@ public class FakeStoreProductService implements IProductService {
         return product;
     }
 }
+
+
+
+//DATABASE       CACHE
+//
+//TABLES

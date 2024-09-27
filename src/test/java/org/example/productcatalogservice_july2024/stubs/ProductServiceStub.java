@@ -41,4 +41,9 @@ public class ProductServiceStub implements IProductService {
        productMap.put(id,product);
        return productMap.get(id);
     }
+
+    @Override
+    public Product getProductBasedOnUserRole(Long userId, Long productId) {
+        return null;
+    }
 }
